@@ -1,11 +1,13 @@
 <?php
-  define('SITE_ROOT', __DIR__);
+  require_once __DIR__ . '/helper/exception_handle_helper.php';
   $request_uri = $_SERVER['REQUEST_URI'];
   $request_method = $_SERVER['REQUEST_METHOD'];
   $apiDir = '/api/';
 
+  $trim_request_uri = rtrim($_SERVER['REQUEST_URI'], '/');
   # accept api routes
-  switch ($request_uri, $request_method) {
+  switch ([$trim_request_uri, $request_method]) {
+    case '':
     case ['/api/enrolments', 'GET']:
       require __DIR__ . $apiDir . 'enrolments/index.php';
       break;
