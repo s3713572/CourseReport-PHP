@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import CourseReportTable from './components/CourseReportTable'
 
 import './App.css'
 
@@ -6,7 +7,7 @@ function App() {
 
   return (
     <>
-      123
+      <CourseReportTable />
     </>
   )
 }
