@@ -21,6 +21,9 @@ Login to mysqlworkbench with corresponding username and password, which are stat
 
 ![image](https://github.com/user-attachments/assets/685d2545-0e0b-42ae-af6d-1e60fe55368b)
 
+![image](https://github.com/user-attachments/assets/628c1d5f-8890-462a-a45d-355f4f1d9d22)
+
+
 
 4. For backend:
    Making sure you are at the right folder
