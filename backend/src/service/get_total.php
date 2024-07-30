@@ -1,14 +1,29 @@
 <?php
   require_once __DIR__ . '/../db/connect.php';
-  function getTotalEnrolmentsCount() { // 确保你有数据库连接对象 $conn
+  function getTotalEnrolmentsCount($search = '', $course = '', $status = '') {
     $dbConn = getDbConnection();
-    $sql = "SELECT COUNT(*) as total FROM Enrolments";
-    $result = $dbConn->query($sql);
+    $search = $dbConn->real_escape_string($search);
 
-    if ($result && $row = $result->fetch_assoc()) {
-        return (int)$row['total'];
-    } else {
-        return 0; // 或者根据需要处理错误
-    }
+    // Build conditions based on whether there are search keywords
+    $searchCondition = $search ? "AND u.first_name LIKE '%$search%'" : "";
+    $courseCondition = $course && $course !== 'default_all' ? "AND c.description = '$course'" : "";
+    $statusCondition = $status && $status !== 'default_all' ? "AND e.completion_status = '$status'" : "";
+
+
+
+    $sql = "
+      SELECT COUNT(*) AS total
+      FROM 
+          Enrolments e
+      JOIN 
+          Users u ON e.user_id = u.user_id
+      JOIN 
+          Courses c ON e.course_id = c.course_id
+      WHERE 
+          1=1 $searchCondition $courseCondition $statusCondition
+    ";
+    $result = $dbConn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total'];
   }
 ?>

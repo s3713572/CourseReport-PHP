@@ -1,9 +1,15 @@
 <?php
   class Meta {
     public $message = '';
+    public $page = null;
+    public $per = null;
+    public $total = null;
 
-    function __construct($message = '') {
+    function __construct($message = '', $page = null, $per = null, $total = null) {
       $this->message = $message;
+      $this->page = $page;
+      $this->per = $per;
+      $this->total = $total;
     }
   }
 
@@ -24,7 +30,7 @@
     echoJSON($data, $meta, $code);
   }
 
-  function echoFail($message, $code = 500) {
+  function echoError($message, $code = 500) {
     $failedMeta = new Meta($message);
     echoJSON(new StdClass, $failedMeta, $code);
   }
