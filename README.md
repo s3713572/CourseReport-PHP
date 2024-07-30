@@ -57,8 +57,6 @@ per (int|null): The number of items per page in pagination.
 total (int|null): The total number of items.
 
 
-Here’s a README for the PHP code snippet you provided:
-
 PHP JSON Response Helper
 This repository contains helper functions for sending JSON responses from a PHP backend. It includes methods for sending success and error responses with metadata.
 
