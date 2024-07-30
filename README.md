@@ -37,7 +37,72 @@ Login to mysqlworkbench with corresponding username and password, which are stat
 7. For frontend:
    Making sure you are at the right folder
    Making sure you have pnpm installed
+   
 
    Run `pnpm install` to install all the dependencies specified in your `package.json` file.
 
    Finally Run `pnpm run dev`
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Class: Meta
+The Meta class is used to encapsulate metadata about the response.
+
+Properties:
+message (string): A message related to the response.
+page (int|null): The current page number in pagination.
+per (int|null): The number of items per page in pagination.
+total (int|null): The total number of items.
+
+
+Here’s a README for the PHP code snippet you provided:
+
+PHP JSON Response Helper
+This repository contains helper functions for sending JSON responses from a PHP backend. It includes methods for sending success and error responses with metadata.
+
+Overview
+The helper functions in this code help to standardize the JSON responses sent by the server. This is particularly useful for APIs to ensure consistency in responses.
+
+Classes and Functions
+Class: Meta
+The Meta class is used to encapsulate metadata about the response.
+
+Properties:
+message (string): A message related to the response.
+page (int|null): The current page number in pagination.
+per (int|null): The number of items per page in pagination.
+total (int|null): The total number of items.
+
+function __construct($message = '', $page = null, $per = null, $total = null)
+$message: An optional message for the response.
+$page: The current page number.
+$per: The number of items per page.
+$total: The total number of items.
+
+Function: echoJSON
+Sends a JSON response with custom metadata and status code.
+
+Parameters:
+$data (mixed): The data to be included in the response.
+$meta (Meta): An instance of the Meta class containing metadata.
+$code (int): The HTTP status code to return.
+
+Function: echoSuccess
+Convenience function for sending a successful response.
+
+Parameters:
+$data (mixed): The data to be included in the response.
+$meta (Meta): An optional instance of the Meta class containing metadata. Defaults to a new Meta instance with an empty message.
+$code (int): The HTTP status code to return. Defaults to 200.
+
+Function: echoError
+Convenience function for sending an error response.
+
+Parameters:
+$message (string): The error message to include in the response.
+$code (int): The HTTP status code to return. Defaults to 500.
+
+Requirements：
+PHP 7.0 or higher
