@@ -48,22 +48,30 @@ Login to mysqlworkbench with corresponding username and password, which are stat
 -------------------------------------------------------------------------------------------------------------------------
 
 Class: Meta
+
 The Meta class is used to encapsulate metadata about the response.
 
 Properties:
+
 message (string): A message related to the response.
+
 page (int|null): The current page number in pagination.
+
 per (int|null): The number of items per page in pagination.
+
 total (int|null): The total number of items.
 
 
 PHP JSON Response Helper
+
 This repository contains helper functions for sending JSON responses from a PHP backend. It includes methods for sending success and error responses with metadata.
 
 Overview
+
 The helper functions in this code help to standardize the JSON responses sent by the server. This is particularly useful for APIs to ensure consistency in responses.
 
 Classes and Functions
+
 Class: Meta
 
 The Meta class is used to encapsulate metadata about the response.
