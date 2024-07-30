@@ -65,6 +65,7 @@ The helper functions in this code help to standardize the JSON responses sent by
 
 Classes and Functions
 Class: Meta
+
 The Meta class is used to encapsulate metadata about the response.
 
 Properties:
