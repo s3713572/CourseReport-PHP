@@ -27,24 +27,17 @@ service.interceptors.request.use(
 // add response interceptors
 service.interceptors.response.use(
   (response) => {
-    console.log(response)
     return response.data;
   },
   (error) => {
-    // 无响应处理，比如 timeout
+    // Request failed，such as timeout
     if (!error.response) {
-      // Message.error({
-      //   content: `请求失败，${error.message}`,
-      //   duration: 5 * 1000,
-      // });
+      console.error('Request failed to call.');
 
-      // 返回一个 pending 的 Promise，防止执行功能的 then 方法，但又不需要额外 catch 处理。
-      // 直接抛异常的话，有些 event 事件最后不手动 catch，会有警告
-      // return new Promise(() => {});
-      return Promise.reject(error); // 不处理，直接抛异常给业务层处理
+      return Promise.reject(error);
     }
 
-    // 4xx 响应处理
+    // 4xx expected errors, should inform user
     if (error.response.status >= 400 && error.response.status <= 499) {
       // Message.error({
       //   content: `操作失败，${
@@ -53,21 +46,15 @@ service.interceptors.response.use(
       //   duration: 5 * 1000,
       // });
       // return new Promise(() => {});
-      return Promise.reject(error); // 不处理，直接抛异常给业务层处理
+      return Promise.reject(error);
     }
 
-    // 5xx 响应处理
+    // 5xx response, internal erros
     if (error.response.status >= 500 && error.response.status <= 599) {
-      // Message.error({
-      //   content: `处理失败，${error.response.status}`,
-      //   duration: 5 * 1000,
-      // });
-      // return new Promise(() => {});
-      return Promise.reject(error); // 不处理，直接抛异常给业务层处理
+      return Promise.reject(error);
     }
 
-    // 6xx+ 响应不处理，所有失败最终都抛出异常，阻止传播到 then 方法
-    return Promise.reject(error); // 不处理，直接抛异常给业务层处理
+    return Promise.reject(error);
   }
 );
 

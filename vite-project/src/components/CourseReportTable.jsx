@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -12,6 +13,15 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { enrolmentsReport } from '../api/enrolments.api'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -34,71 +44,172 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(student_name, math, english, physics) {
-  return { student_name, math, english, physics };
-}
-
-const rows = [
-  createData('Bob', 159, 6.0, 24, 4.0),
-  createData('Joey', 237, 9.0, 37, 4.3),
-  createData('Alan', 262, 16.0, 24, 6.0),
-  createData('Harry', 305, 3.7, 67, 4.3),
-  createData('Patrick', 356, 16.0, 49, 3.9),
-];
-
 const CourseReportTable = () => {
+  const [enrolments, setEnrolments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchInput, setSearchInput] = useState("")
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const perPage = 10
+
+  const [status, setStatus] = React.useState('');
+  const [searchBtnTrigger, setSearchBtnTrigger] = useState(true);
+
+  const [course, setCourse] = React.useState('');
+
+  useEffect(() => {
+    // get filtered data
+    const fetchEnrolments = async () => {
+      try {
+        const response = await enrolmentsReport({ page, per: perPage, search: searchInput, course: course, status: status });
+        setEnrolments(response.data.enrolments);
+        setTotalPages(response.meta.total);
+      } catch (err) {
+        console.error('Error fetching enrolments:', err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEnrolments();
+  }, [page, searchBtnTrigger, course, status])
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
 
   const handleInputChange = (event) => {
     setSearchInput(event.target.value);
   };
 
   const handleSearch = () => {
-    alert("成了" + searchInput)
-    enrolmentsReport()
+    setSearchBtnTrigger(prevState => !prevState)
   }
+
+  const handleStatusSelectionChange = (event) => {
+    setStatus(event.target.value);
+    console.log(event.target.value)
+  };
+
+  const handleCourseSelectionChange = (event) => {
+    setCourse(event.target.value);
+    console.log(event.target.value)
+  };
+
+  const getCircleStyle = (status) => {
+    switch (status) {
+      case 'completed':
+        return { backgroundColor: 'green' };
+      case 'not_started':
+        return { backgroundColor: 'red' };
+      case 'in_progress':
+        return { backgroundColor: 'yellow' };
+      default:
+        return { backgroundColor: 'gray' }; // 默认颜色
+    }
+  };
 
   return (
     <>
+      <h1>Enrolments Report</h1>
+      <div style={{display: "flex"}}>
+
       <Paper
         component="form"
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: 5, marginBottom: 2 }}
       >
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search student"
+          placeholder="Search student first name"
           inputProps={{ 'aria-label': 'search student' }}
           onChange={handleInputChange}
           value={searchInput}
         />
         <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
-          <SearchIcon/>
+          <SearchIcon />
         </IconButton>
       </Paper>
-      <TableContainer component={Paper} sx={{boxShadow: 5}}>
-        <Table sx={{ minWidth: 700}} aria-label="customized table">
+      <Box sx={{ minWidth: 140, marginTop: '-6px', marginLeft: '60px'}}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Course</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={course}
+            label="Completion Status"
+            onChange={handleCourseSelectionChange}
+          >
+            <MenuItem value="default_all">Default(all)</MenuItem>
+            <MenuItem value="Math">Math</MenuItem>
+            <MenuItem value="English">English</MenuItem>
+            <MenuItem value="Physics">Physics</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box sx={{ minWidth: 220, marginTop: '-6px', marginLeft: '60px'}}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Completion Status</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={status}
+            label="Completion Status"
+            onChange={handleStatusSelectionChange}
+          >
+            <MenuItem value="default_all">Default(all)</MenuItem>
+            <MenuItem value="completed">completed</MenuItem>
+            <MenuItem value="in_progress">in_progress</MenuItem>
+            <MenuItem value="not_started">not_started</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      </div>
+
+      <TableContainer component={Paper} sx={{ boxShadow: 5 }}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Student Name</StyledTableCell>
-              <StyledTableCell align="right">Math</StyledTableCell>
-              <StyledTableCell align="right">English</StyledTableCell>
-              <StyledTableCell align="right">Physics</StyledTableCell>
+              <StyledTableCell>First Name</StyledTableCell>
+              <StyledTableCell align="left">Surname</StyledTableCell>
+              <StyledTableCell align="left">Course</StyledTableCell>
+              <StyledTableCell align="left">Completion Status</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.student_name}>
+            {enrolments.map((enrolment) => (
+              <StyledTableRow>
                 <StyledTableCell component="th" scope="row">
-                  {row.student_name}
+                  {enrolment.first_name}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.math}</StyledTableCell>
-                <StyledTableCell align="right">{row.english}</StyledTableCell>
-                <StyledTableCell align="right">{row.physics}</StyledTableCell>
+                <StyledTableCell align="left">{enrolment.surname}</StyledTableCell>
+                <StyledTableCell align="left">{enrolment.course_description}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <div style={{ display: 'flex' }}>
+                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', ...getCircleStyle(enrolment.completion_status), marginRight: '12px', marginTop: '6px' }} />
+                    {enrolment.completion_status}
+                  </div>
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
+
       </TableContainer>
+      <Stack sx={{ marginTop: 5, marginLeft: -1 }}>
+        <Pagination
+          color="primary"
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          variant="outlined"
+          shape="rounded"
+        />
+      </Stack>
     </>
 
   )
