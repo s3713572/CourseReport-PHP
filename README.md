@@ -89,6 +89,8 @@ $per: The number of items per page.
 
 $total: The total number of items.
 
+-----------------------------------------------
+
 Function: echoJSON
 
 Sends a JSON response with custom metadata and status code.
@@ -100,6 +102,8 @@ $data (mixed): The data to be included in the response.
 $meta (Meta): An instance of the Meta class containing metadata.
 
 $code (int): The HTTP status code to return.
+
+-----------------------------------------------
 
 Function: echoSuccess
 
@@ -113,6 +117,8 @@ $meta (Meta): An optional instance of the Meta class containing metadata. Defaul
 
 $code (int): The HTTP status code to return. Defaults to 200.
 
+-----------------------------------------------
+
 Function: echoError
 
 Convenience function for sending an error response.
@@ -122,6 +128,8 @@ Parameters:
 $message (string): The error message to include in the response.
 
 $code (int): The HTTP status code to return. Defaults to 500.
+
+-----------------------------------------------
 
 Requirements：
 
