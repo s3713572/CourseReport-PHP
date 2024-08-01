@@ -1,5 +1,5 @@
 <?php
-    function getDbConnection() {
+  function getDbConnection() {
       // 加载 .env 文件
     //   $dotenv = Dotenv::createImmutable(__DIR__);
     //   $dotenv->load();
