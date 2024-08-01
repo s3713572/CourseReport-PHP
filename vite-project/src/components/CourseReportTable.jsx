@@ -114,60 +114,68 @@ const CourseReportTable = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      handleSearch();
+    }
+  };
+
   return (
     <>
       <h1>Enrolments Report</h1>
-      <div style={{display: "flex"}}>
+      <div style={{ display: "flex" }}>
 
-      <Paper
-        component="form"
-        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: 5, marginBottom: 2 }}
-      >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search student first name"
-          inputProps={{ 'aria-label': 'search student' }}
-          onChange={handleInputChange}
-          value={searchInput}
-        />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
-          <SearchIcon />
-        </IconButton>
-      </Paper>
-      <Box sx={{ minWidth: 140, marginTop: '-6px', marginLeft: '60px'}}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Course</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={course}
-            label="Completion Status"
-            onChange={handleCourseSelectionChange}
-          >
-            <MenuItem value="default_all">Default(all)</MenuItem>
-            <MenuItem value="Math">Math</MenuItem>
-            <MenuItem value="English">English</MenuItem>
-            <MenuItem value="Physics">Physics</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      <Box sx={{ minWidth: 220, marginTop: '-6px', marginLeft: '60px'}}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Completion Status</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={status}
-            label="Completion Status"
-            onChange={handleStatusSelectionChange}
-          >
-            <MenuItem value="default_all">Default(all)</MenuItem>
-            <MenuItem value="completed">completed</MenuItem>
-            <MenuItem value="in_progress">in_progress</MenuItem>
-            <MenuItem value="not_started">not_started</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+        <Paper
+          component="form"
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: 5, marginBottom: 2 }}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search student first name"
+            inputProps={{ 'aria-label': 'search student' }}
+            onChange={handleInputChange}
+            value={searchInput}
+            onKeyDown={handleKeyDown}
+          />
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch} >
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+        <Box sx={{ minWidth: 140, marginTop: '-6px', marginLeft: '60px' }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Course</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={course}
+              label="Completion Status"
+              onChange={handleCourseSelectionChange}
+            >
+              <MenuItem value="default_all">Default(all)</MenuItem>
+              <MenuItem value="Math">Math</MenuItem>
+              <MenuItem value="English">English</MenuItem>
+              <MenuItem value="Physics">Physics</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box sx={{ minWidth: 220, marginTop: '-6px', marginLeft: '60px' }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Completion Status</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={status}
+              label="Completion Status"
+              onChange={handleStatusSelectionChange}
+            >
+              <MenuItem value="default_all">Default(all)</MenuItem>
+              <MenuItem value="completed">completed</MenuItem>
+              <MenuItem value="in_progress">in_progress</MenuItem>
+              <MenuItem value="not_started">not_started</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
       </div>
 
       <TableContainer component={Paper} sx={{ boxShadow: 5 }}>
