@@ -25,19 +25,7 @@ Login to mysqlworkbench with corresponding username and password, which are stat
 
 
 
-<<<<<<< HEAD
-4. For backend:
-   Making sure you are at the right folder
-   Making sure the docker desktop is running
-   Run command: `make bash`
-                `make db-setup`
-                `make seeds`
-   (This helps generating 100+ records into the database)
-6. Finally, run command:
-   `docker-compose up`
-=======
-****Backend Setup****
->>>>>>> d0992264fe5f5f3b77f1d12c2c32d719be0120cb
+**Backend Setup**
 
 **Ensure Correct Directory**
 
