@@ -25,25 +25,55 @@ Login to mysqlworkbench with corresponding username and password, which are stat
 
 
 
-4. For backend:
-   Making sure you are at the right folder
-   Making sure the docker desktop is running
-   Run command: `make bash`
-                `make seeds`
-   (This helps generating 100+ records into the database)
-6. Finally, run command:
-   `docker-compose up`
+****Backend Setup****
 
-7. For frontend:
-   Making sure you are at the right folder
-   Making sure you have pnpm installed
-   
+**Ensure Correct Directory**
 
-   Run `pnpm install` to install all the dependencies specified in your `package.json` file.
+Navigate to the appropriate folder where the backend code resides.
 
-   Finally Run `pnpm run dev`
+**Check Docker Desktop**
+
+Verify that Docker Desktop is running on your machine.
+
+Run `docker-compose build`
+
+**Initialize the Database**
+
+Run the following commands to set up the database and populate it with sample data:
+
+`make bash`
+`make db-setup`
+`make seeds`
+
+Note: The make seeds command generates over 100 records in the database.
 
 -------------------------------------------------------------------------------------------------------------------------
+
+**Start Backend Services**
+
+Execute the following command to start all necessary backend services:
+
+`docker-compose up`
+
+-------------------------------------------------------------------------------------------------------------------------
+
+****Frontend Setup****
+
+**Ensure Correct Directory**
+
+Navigate to the directory containing the frontend code.
+
+**Check pnpm Installation**
+
+Confirm that pnpm is installed on your system.
+
+**Install Dependencies**
+
+Run the following command to install all dependencies specified in your package.json file:
+
+`pnpm install`
+
+`pnpm run dev`
 
 -------------------------------------------------------------------------------------------------------------------------
 
