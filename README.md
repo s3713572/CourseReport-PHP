@@ -29,6 +29,7 @@ Login to mysqlworkbench with corresponding username and password, which are stat
    Making sure you are at the right folder
    Making sure the docker desktop is running
    Run command: `make bash`
+                `make db-setup`
                 `make seeds`
    (This helps generating 100+ records into the database)
 6. Finally, run command:
