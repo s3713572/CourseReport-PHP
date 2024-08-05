@@ -10,7 +10,6 @@
     $course = $dbConn->real_escape_string($course);
     $status = $dbConn->real_escape_string($status);
 
-
     $searchCondition = $search ? "AND (u.first_name LIKE '%$search%' OR u.surname LIKE '%$search%')" : "";
     $courseCondition = $course && $course !== 'default_all' ? "AND c.description = '$course'" : "";
     $statusCondition = $status && $status !== 'default_all' ? "AND e.completion_status = '$status'" : "";

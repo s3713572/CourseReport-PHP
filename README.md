@@ -57,7 +57,7 @@ Execute the following command to start all necessary backend services:
 
 -------------------------------------------------------------------------------------------------------------------------
 
-****Frontend Setup****
+**Frontend Setup**
 
 **Ensure Correct Directory**
 
