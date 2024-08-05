@@ -25,7 +25,11 @@ Login to mysqlworkbench with corresponding username and password, which are stat
 
 
 
+<<<<<<< HEAD
 ****Backend Setup****
+=======
+**Backend Setup**
+>>>>>>> 316a4676889944114bc76be768928e23bd6279e9
 
 **Ensure Correct Directory**
 
@@ -42,7 +46,6 @@ Run `docker-compose build`
 Run the following commands to set up the database and populate it with sample data:
 
 `make bash`
-`make db-setup`
 `make seeds`
 
 Note: The make seeds command generates over 100 records in the database.
