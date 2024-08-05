@@ -49,15 +49,14 @@ const CourseReportTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchInput, setSearchInput] = useState("")
-
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const perPage = 10
-
   const [status, setStatus] = React.useState('');
   const [searchBtnTrigger, setSearchBtnTrigger] = useState(true);
-
   const [course, setCourse] = React.useState('');
+
+
 
   useEffect(() => {
     // get filtered data
@@ -76,31 +75,38 @@ const CourseReportTable = () => {
     fetchEnrolments();
   }, [page, searchBtnTrigger, course, status])
 
+  // Show loading or error messages based on state
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  const handlePageChange = (event, value) => {
+  // Handle page change in pagination
+  const handlePageChange = (value) => {
     setPage(value);
   };
 
+  // Handle input change in the search field
   const handleInputChange = (event) => {
     setSearchInput(event.target.value);
   };
 
+  // Trigger a search when the search button is clicked or Enter is pressed
   const handleSearch = () => {
     setSearchBtnTrigger(prevState => !prevState)
   }
 
+  // Handle change in status dropdown selection
   const handleStatusSelectionChange = (event) => {
     setStatus(event.target.value);
     console.log(event.target.value)
   };
 
+  
   const handleCourseSelectionChange = (event) => {
     setCourse(event.target.value);
     console.log(event.target.value)
   };
 
+  // Get the style for the status circle indicator
   const getCircleStyle = (status) => {
     switch (status) {
       case 'completed':
@@ -189,8 +195,8 @@ const CourseReportTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {enrolments.map((enrolment) => (
-              <StyledTableRow>
+            {enrolments.map((enrolment, index) => (
+              <StyledTableRow key={`${enrolment.first_name}-${enrolment.surname}-${enrolment.course_description}-${index}`}>
                 <StyledTableCell component="th" scope="row">
                   {enrolment.first_name}
                 </StyledTableCell>

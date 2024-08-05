@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'antd';
 
 const service = axios.create({
   withCredentials: false,
@@ -16,7 +17,7 @@ service.interceptors.request.use(
     return config;
   },
   (error) => {
-    Message.error({
+    message.error({
       content: error.message || 'Request Error',
       duration: 5 * 1000,
     });
@@ -39,13 +40,6 @@ service.interceptors.response.use(
 
     // 4xx expected errors, should inform user
     if (error.response.status >= 400 && error.response.status <= 499) {
-      // Message.error({
-      //   content: `操作失败，${
-      //     error.response.data.message || error.response.status
-      //   }`, // 当 4xx 错误是由 Web 服务器或者应用服务器触发的，此时没有 message 值，这里要特殊处理一下
-      //   duration: 5 * 1000,
-      // });
-      // return new Promise(() => {});
       return Promise.reject(error);
     }
 
